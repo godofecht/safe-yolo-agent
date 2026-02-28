@@ -1,0 +1,202 @@
+{
+  "version": "1.0.0",
+  "policy": "DENY_BY_DEFAULT",
+  "description": "Allowlist permissions for safe AI agent operations",
+  
+  "allowed_tools": {
+    "read_operations": [
+      "read_file",
+      "glob",
+      "grep_search",
+      "list_directory",
+      "web_fetch"
+    ],
+    "write_operations": [
+      "write_file",
+      "edit",
+      "todo_write"
+    ],
+    "exec_operations": [
+      "run_shell_command"
+    ],
+    "network_operations": [
+      "web_search",
+      "web_fetch"
+    ]
+  },
+
+  "shell_allowlist": {
+    "safe_commands": [
+      "ls",
+      "cat",
+      "head",
+      "tail",
+      "wc",
+      "grep",
+      "find",
+      "which",
+      "pwd",
+      "date",
+      "uptime",
+      "hostname",
+      "echo",
+      "mkdir",
+      "cp",
+      "mv",
+      "chmod",
+      "chown",
+      "git",
+      "npm",
+      "yarn",
+      "pip",
+      "python",
+      "node",
+      "ssh",
+      "sshpass",
+      "ssh-agent",
+      "ssh-add",
+      "curl",
+      "wget",
+      "pkg",
+      "apt"
+    ],
+    "blocked_patterns": [
+      "rm -rf /",
+      "rm -rf /*",
+      "rm -rf ~",
+      "rm -rf /home",
+      "rm -rf /etc",
+      "rm -rf /usr",
+      "rm -rf /var",
+      "rm -rf /root",
+      "dd if=/dev/zero",
+      ":(){:|:&};:",
+      "chmod 777 /",
+      "chmod -R 777 /",
+      "mkfs",
+      "fdisk",
+      "parted",
+      ":(){ :|:& };:",
+      "> /dev/sda",
+      "> /dev/mmcblk"
+    ],
+    "blocked_paths": [
+      "/etc/",
+      "/usr/",
+      "/bin/",
+      "/sbin/",
+      "/lib/",
+      "/lib64/",
+      "/proc/",
+      "/sys/",
+      "/dev/",
+      "/boot/"
+    ],
+    "require_confirm": [
+      "rm ",
+      "rmdir ",
+      "DROP ",
+      "DELETE ",
+      "TRUNCATE ",
+      "sudo ",
+      "su ",
+      "dd ",
+      "mkfs",
+      "format",
+      "shutdown",
+      "reboot",
+      "kill -9",
+      "pkill ",
+      "killall "
+    ]
+  },
+
+  "file_write_rules": {
+    "allowed_extensions": [
+      ".md",
+      ".txt",
+      ".json",
+      ".yaml",
+      ".yml",
+      ".toml",
+      ".py",
+      ".js",
+      ".ts",
+      ".jsx",
+      ".tsx",
+      ".html",
+      ".css",
+      ".sh",
+      ".bash",
+      ".zsh",
+      ".rc",
+      ".conf",
+      ".cfg",
+      ".ini",
+      ".log",
+      ".sql",
+      ".gitignore",
+      ".dockerignore",
+      ".env.example"
+    ],
+    "blocked_paths": [
+      "/etc/",
+      "/usr/",
+      "/bin/",
+      "/sbin/",
+      "/lib/",
+      "/proc/",
+      "/sys/",
+      "/dev/",
+      "/boot/",
+      "/root/.ssh/",
+      "~/.ssh/"
+    ],
+    "require_confirm_paths": [
+      "~/.bashrc",
+      "~/.zshrc",
+      "~/.profile",
+      "~/.bash_profile",
+      "package.json",
+      "requirements.txt",
+      "Cargo.toml",
+      "go.mod"
+    ]
+  },
+
+  "network_rules": {
+    "allowed_domains": [
+      "github.com",
+      "npmjs.com",
+      "pypi.org",
+      "stackoverflow.com",
+      "wikipedia.org"
+    ],
+    "blocked_ports": [
+      22,
+      23,
+      25,
+      3306,
+      5432,
+      6379,
+      27017
+    ],
+    "require_confirm_domains": [
+      "raw.githubusercontent.com"
+    ]
+  },
+
+  "rate_limits": {
+    "max_shell_commands_per_minute": 30,
+    "max_file_writes_per_minute": 20,
+    "max_network_requests_per_minute": 60,
+    "max_concurrent_tasks": 3
+  },
+
+  "audit": {
+    "log_all_operations": true,
+    "log_path": "~/.safe-yolo/audit.log",
+    "alert_on_blocked": true,
+    "alert_on_confirm_required": true
+  }
+}
