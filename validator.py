@@ -10,7 +10,7 @@ import json
 import re
 import sys
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timezone
 
 class PermissionValidator:
     def __init__(self, config_path=None):
@@ -26,7 +26,7 @@ class PermissionValidator:
     def log_operation(self, operation, params, result, reason=""):
         """Log operation to audit file"""
         entry = {
-            "timestamp": datetime.utcnow().isoformat() + "Z",
+            "timestamp": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
             "operation": operation,
             "params": str(params),
             "result": result,
